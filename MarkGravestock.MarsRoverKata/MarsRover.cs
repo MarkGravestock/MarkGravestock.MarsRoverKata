@@ -5,12 +5,23 @@ namespace MarkGravestock.MarsRoverKata
 
     public class MarsRover
     {
-        private string result = "1:0:N";
-        public string Result => result;
+        private int x = 0;
+        private string direction = "N";
+        
+        public string Result => $"{x}:0:{direction}";
 
-        public void Command(string command)
+        public void Command(string commands)
         {
-            result = command.Length + ":0:N";
+            foreach (var command in commands)
+            {
+                if (command == 'L')
+                { 
+                    direction = "W";
+                    return;
+                }
+
+                x++;
+            }
         }
     }
 }
