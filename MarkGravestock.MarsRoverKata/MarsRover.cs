@@ -6,10 +6,9 @@ namespace MarkGravestock.MarsRoverKata
     {
         private readonly Direction direction = new Direction();
 
-        private readonly Axis x = new Axis();
-        private readonly Axis y = new Axis();
+        private readonly Position position = new Position();
 
-        private string Result => $"{x.Offset}:{y.Offset}:{direction.GetDirection()}";
+        private string Result => $"{position.XOffset}:{position.YOffset}:{direction.GetDirection()}";
 
         public string Execute(string commands)
         {
@@ -36,19 +35,19 @@ namespace MarkGravestock.MarsRoverKata
         {
             if (direction.GetDirection() == "N")
             {
-                y.MoveUpAxis();
+                position.MoveNorth();
             }
             else if (direction.GetDirection() == "S")
             {
-                y.MoveDownAxis();
+                position.MoveSouth();
             }
             else if (direction.GetDirection() == "W")
             {
-                x.MoveDownAxis();
+                position.MoveWest();
             }
             else
             {
-                x.MoveUpAxis();
+                position.MoveEast();
             }
         }
     }
