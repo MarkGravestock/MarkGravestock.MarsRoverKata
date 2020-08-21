@@ -1,45 +1,17 @@
 namespace MarkGravestock.MarsRoverKata
 {
-    // TODO: Assuming start point is 0:0:N Input M Output
-    // TODO: Input "M", Output "2:0:N" 
-
-    public class Direction
-    {
-        private readonly string[] directions = { "N", "W", "S", "E" };
-        private int directionOffset = 0;
-
-        public string GetDirection()
-        {
-            return directions[directionOffset];
-        }
-
-        public void TurnRight()
-        {
-            if (directionOffset == 0)
-            {
-                directionOffset = 3;
-            }
-            else
-            {
-                directionOffset = (directionOffset - 1) % 4;
-            }
-        }
-
-        public void TurnLeft()
-        {
-            directionOffset = (directionOffset + 1) % 4;
-        }
-    }
+    // TODO Obstacles
 
     public class MarsRover
     {
-        private int x = 0;
-
         private readonly Direction direction = new Direction();
 
-        public string Result => $"{x}:0:{direction.GetDirection()}";
+        private readonly Axis x = new Axis();
+        private readonly Axis y = new Axis();
 
-        public void Command(string commands)
+        private string Result => $"{x.Offset}:{y.Offset}:{direction.GetDirection()}";
+
+        public string Execute(string commands)
         {
             foreach (var command in commands)
             {
@@ -56,11 +28,28 @@ namespace MarkGravestock.MarsRoverKata
                     MoveInDirection();
                 }
             }
+
+            return Result;
         }
 
         private void MoveInDirection()
         {
-            x++;
+            if (direction.GetDirection() == "N")
+            {
+                y.MoveUpAxis();
+            }
+            else if (direction.GetDirection() == "S")
+            {
+                y.MoveDownAxis();
+            }
+            else if (direction.GetDirection() == "W")
+            {
+                x.MoveDownAxis();
+            }
+            else
+            {
+                x.MoveUpAxis();
+            }
         }
     }
 }
