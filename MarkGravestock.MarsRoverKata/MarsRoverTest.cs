@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Security.Principal;
+using Xunit;
 
 namespace MarkGravestock.MarsRoverKata
 {
@@ -22,14 +23,19 @@ namespace MarkGravestock.MarsRoverKata
         [InlineData("LM", "9:0:W")]
         [InlineData("MMRMMLM", "2:3:N")]
         [InlineData("RMMLM", "2:1:N")]
-        [InlineData("MMMMMMMMMM", "0:0:N")]
         [InlineData("LMMMMMMMMMM", "0:0:W")]
-
         public void when_the_rover_executes_a_command_the_output_is_correct(string command, string expectedOutput)
         {
             var sut = new MarsRover();
             
             Assert.Equal(expectedOutput, sut.Execute(command));
+        }
+
+        [Fact]
+        public void when_the_rover_move_to_a_position_that_is_occupied_the_last_empty_position_is_returned()
+        {
+            var sut = new MarsRover(new Grid());
+            Assert.Equal("O:0:2:N", sut.Execute("MMMM"));
         }
     }
 }

@@ -4,9 +4,19 @@ namespace MarkGravestock.MarsRoverKata
 
     public class MarsRover
     {
+        private readonly Grid grid;
+        
         private readonly Direction direction = new Direction();
-
         private readonly Position position = new Position();
+
+        public MarsRover() : this(new EmptyGrid())
+        {
+        }
+        
+        public MarsRover(Grid grid)
+        {
+            this.grid = grid;
+        }
 
         private string Result => $"{position.XOffset}:{position.YOffset}:{direction.GetDirection()}";
 
@@ -24,7 +34,14 @@ namespace MarkGravestock.MarsRoverKata
                 }
                 else
                 {
+                    var previousPosition = Result;
+                    
                     MoveInDirection();
+
+                    if (grid.HasObstructionAt(position))
+                    {
+                        return $"O:{previousPosition}";
+                    }
                 }
             }
 
