@@ -2,7 +2,9 @@
 {
     public class Axis
     {
-        private readonly ConstrainedValue constrainedValue = new ConstrainedValue(10);
+        private const int MaximumGridValue = 10;
+        
+        private readonly ConstrainedValue constrainedValue = new ConstrainedValue(MaximumGridValue);
 
         public int Offset => constrainedValue.Offset;
 

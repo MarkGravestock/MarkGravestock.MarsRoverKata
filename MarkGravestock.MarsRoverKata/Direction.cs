@@ -2,9 +2,11 @@
 {
     public class Direction
     {
+        private const int MaximumDirectionValue = 4;
+        
         private readonly string[] directions = { "N", "W", "S", "E" };
 
-        private readonly ConstrainedValue directionOffset = new ConstrainedValue(4);
+        private readonly ConstrainedValue directionOffset = new ConstrainedValue(MaximumDirectionValue);
 
         public string GetDirection()
         {

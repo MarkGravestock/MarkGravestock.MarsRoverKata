@@ -1,12 +1,11 @@
 namespace MarkGravestock.MarsRoverKata
 {
-    // TODO Obstacles
-
     public class MarsRover
     {
         private readonly Grid grid;
         
         private readonly Direction direction = new Direction();
+        
         private readonly Position position = new Position();
 
         public MarsRover() : this(new EmptyGrid())
@@ -50,6 +49,7 @@ namespace MarkGravestock.MarsRoverKata
 
         private void MoveInDirection()
         {
+            //state.Move()
             if (direction.GetDirection() == "N")
             {
                 position.MoveNorth();
