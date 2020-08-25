@@ -8,7 +8,7 @@ namespace MarkGravestock.MarsRoverKata
         
         private readonly Position position = new Position();
 
-        public MarsRover() : this(new EmptyGrid())
+        public MarsRover() : this(new Grid())
         {
         }
         
@@ -31,7 +31,7 @@ namespace MarkGravestock.MarsRoverKata
                 {
                     direction.TurnRight();
                 }
-                else
+                else if (command == 'M')
                 {
                     var previousPosition = Result;
                     
