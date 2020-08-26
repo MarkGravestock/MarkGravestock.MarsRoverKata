@@ -2,73 +2,97 @@ using System;
 
 namespace MarkGravestock.MarsRoverKata
 {
-    public class North : IDirection
+    public class North : DirectionState
     {
-        public IDirection TurnLeft()
+        public North(MarsRover marsRover) : base(marsRover)
         {
-            return new West();
         }
 
-        public IDirection TurnRight()
+        public override void TurnLeft()
         {
-            return new East();
+            MarsRover.Direction = new West(MarsRover);
+        }
+
+        public override void TurnRight()
+        {
+            MarsRover.Direction = new East(MarsRover);
         }
     }
 
-    public class East : IDirection
+    public class East : DirectionState
     {
-        public IDirection TurnLeft()
+        public East(MarsRover marsRover) : base(marsRover)
         {
-            return new North();
         }
 
-        public IDirection TurnRight()
+        public override void TurnLeft()
         {
-            return new South();
+            MarsRover.Direction = new North(MarsRover);
+        }
+
+        public override void TurnRight()
+        {
+            MarsRover.Direction = new South(MarsRover);
         }
     }
 
-    public class West : IDirection
+    public class West : DirectionState
     {
-        public IDirection TurnLeft()
+        public West(MarsRover marsRover) : base(marsRover)
         {
-            return new South();
         }
 
-        public IDirection TurnRight()
+        public override void TurnLeft()
         {
-            return new North();
+            MarsRover.Direction = new South(MarsRover);
+        }
+
+        public override void TurnRight()
+        {
+            MarsRover.Direction = new North(MarsRover);
+        }
+
+    }
+
+    public class South : DirectionState
+    {
+        public override void TurnLeft()
+        {
+            MarsRover.Direction = new East(MarsRover);
+        }
+
+        public override void TurnRight()
+        {
+            MarsRover.Direction = new West(MarsRover);
+        }
+
+        public South(MarsRover marsRover) : base(marsRover)
+        {
         }
     }
 
-    public class South : IDirection
+    public abstract class DirectionState // State
     {
-        public IDirection TurnLeft()
+        protected DirectionState(MarsRover marsRover)
         {
-            return new East();
+            this.MarsRover = marsRover;
         }
 
-        public IDirection TurnRight()
-        {
-            return new West();
-        }
-    }
+        // Context from GOF Patter
+        protected MarsRover MarsRover { get; }
 
-    public interface IDirection
-    {
-        IDirection TurnLeft();
-        IDirection TurnRight();
+        public abstract void TurnLeft();
+
+        public abstract void TurnRight();
     }
 
     public class MarsRover
     {
         private readonly Grid grid;
         
-        private IDirection _direction = new North();
+        public DirectionState _direction;
         
-        private readonly Direction direction = new Direction();
-        
-        private readonly Position position = new Position();
+        public readonly Position position = new Position();
 
         public MarsRover() : this(new Grid())
         {
@@ -76,10 +100,17 @@ namespace MarkGravestock.MarsRoverKata
         
         public MarsRover(Grid grid)
         {
+            Direction = new North(this);
             this.grid = grid;
         }
 
-        private string Result => $"{position.XOffset}:{position.YOffset}:{direction.GetDirection()}";
+        private string Result => $"{position.XOffset}:{position.YOffset}:{Direction.GetType().Name.Substring(0, 1)}";
+
+        public DirectionState Direction
+        {
+            get => _direction;
+            set => _direction = value;
+        }
 
         public string Execute(string commands)
         {
@@ -87,13 +118,11 @@ namespace MarkGravestock.MarsRoverKata
             {
                 if (command == 'L')
                 {
-                    _direction = _direction.TurnLeft();
-                    direction.TurnLeft();
+                    Direction.TurnLeft();
                 }
                 else if (command == 'R')
                 {
-                    _direction = _direction.TurnRight();
-                    direction.TurnRight();
+                    Direction.TurnRight();
                 }
                 else if (command == 'M')
                 {
@@ -114,15 +143,15 @@ namespace MarkGravestock.MarsRoverKata
         private void MoveInDirection()
         {
             //state.Move()
-            if (_direction is North)
+            if (Direction is North)
             {
                 position.MoveNorth();
             }
-            else if (_direction is South)
+            else if (Direction is South)
             {
                 position.MoveSouth();
             }
-            else if (_direction is West)
+            else if (Direction is West)
             {
                 position.MoveWest();
             }
