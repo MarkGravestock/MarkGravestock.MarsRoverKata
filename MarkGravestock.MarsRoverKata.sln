@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkGravestock.MarsRoverKata", "MarkGravestock.MarsRoverKata\MarkGravestock.MarsRoverKata.csproj", "{A991A00B-5B2F-4B92-8FAE-9366A94DE168}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{4CB025E8-B3BF-4E31-ADA3-ADBEECE3CCD2}"
+ProjectSection(SolutionItems) = preProject
+	ReadMe.md = ReadMe.md
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
